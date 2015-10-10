@@ -27,6 +27,7 @@ public class ItemDaoMock implements ItemDao {
     }
 
     public void createItem(Item item) {
+        item.setId(allItems.size() + 1);
         allItems.add(item);
     }
 
@@ -35,7 +36,7 @@ public class ItemDaoMock implements ItemDao {
      * 
      * @see home.vu.common.dao.ItemDao#updateItemDetails(int, java.lang.String, java.lang.Float, java.lang.Long, java.lang.Boolean)
      */
-    public void updateItemDetails(int id, String name, Float price, Long quantity, Boolean active) {
+    public void updateItemDetails(int id, String name, float price, long quantity, Boolean active) {
         for (int i = 0; i < allItems.size(); i++) {
             Item item = allItems.get(i);
             if (item.getId() == id) {
@@ -45,11 +46,11 @@ public class ItemDaoMock implements ItemDao {
                     item.setName(name);
                 }
 
-                if (price != null) {
+                if (price != -1) {
                     item.setPrice(price);
                 }
 
-                if (quantity != null) {
+                if (quantity != -1) {
                     item.setQuantity(quantity);
                 }
 
@@ -99,7 +100,15 @@ public class ItemDaoMock implements ItemDao {
      * @see home.vu.common.dao.ItemDao#queryItems(java.lang.String, boolean, int, int)
      */
     public List<Item> queryItems(String sortBy, boolean asc, int offset, int limit) {
-        Comparator<Item> customComparator = new CustomItemComparator(Comaprable.valueOf(sortBy), asc);
+        if (sortBy == null) {
+            sortBy = Comparable.name.toString();
+        }
+
+        if (limit == -1) {
+            limit = allItems.size();
+        }
+
+        Comparator<Item> customComparator = new CustomItemComparator(Comparable.valueOf(sortBy), asc);
         Collections.sort(allItems, customComparator);
 
         List<Item> returnedList = new ArrayList<Item>();
@@ -138,10 +147,10 @@ public class ItemDaoMock implements ItemDao {
      */
     private class CustomItemComparator implements Comparator<Item> {
 
-        private Comaprable comparable;
+        private Comparable comparable;
         private boolean asc;
 
-        public CustomItemComparator(Comaprable comparable, boolean asc) {
+        public CustomItemComparator(Comparable comparable, boolean asc) {
             this.comparable = comparable;
             this.asc = asc;
         }
@@ -173,7 +182,7 @@ public class ItemDaoMock implements ItemDao {
      * @author Le Huy Vu
      *
      */
-    private enum Comaprable {
+    private enum Comparable {
         name, price, quantity, active;
     }
 

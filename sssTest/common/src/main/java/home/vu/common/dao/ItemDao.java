@@ -27,7 +27,7 @@ public interface ItemDao {
      * @param quantity
      * @param active
      */
-    public void updateItemDetails(int id, String name, Float price, Long quantity, Boolean active);
+    public void updateItemDetails(int id, String name, float price, long quantity, Boolean active);
 
     /**
      * Delete item specified by id

@@ -26,6 +26,7 @@ public class UserDaoMock implements UserDao {
      * @see home.vu.common.dao.UserDao#createUser(home.vu.common.model.User)
      */
     public void createUser(User newUser) {
+        newUser.setId(allUsers.size());
         allUsers.add(newUser);
     }
 
