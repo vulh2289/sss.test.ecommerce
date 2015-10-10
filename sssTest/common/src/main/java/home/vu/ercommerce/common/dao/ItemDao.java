@@ -5,7 +5,7 @@ import home.vu.common.model.Item;
 import java.util.List;
 
 /**
- * Interface that provides CRUD communication to databaseda.
+ * Interface that provides Item CRUD communication to database.
  * 
  * @author Le Huy Vu
  *

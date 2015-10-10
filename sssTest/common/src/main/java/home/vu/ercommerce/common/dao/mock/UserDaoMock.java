@@ -11,6 +11,7 @@ import org.joda.time.DateTime;
 public class UserDaoMock implements UserDao {
 
     private List<User> allUsers;
+    private int currentId = 0;
 
     // Constructor
 
@@ -26,7 +27,7 @@ public class UserDaoMock implements UserDao {
      * @see home.vu.common.dao.UserDao#createUser(home.vu.common.model.User)
      */
     public void createUser(User newUser) {
-        newUser.setId(allUsers.size());
+        newUser.setId(++currentId);
         allUsers.add(newUser);
     }
 
@@ -113,6 +114,7 @@ public class UserDaoMock implements UserDao {
             user.setUserName("vu+" + i + "@adoreboard.com");
 
             fakeUsers.add(user);
+            currentId = i;
         }
 
         return fakeUsers;

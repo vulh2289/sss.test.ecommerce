@@ -5,7 +5,7 @@ import home.vu.common.model.User;
 import java.util.List;
 
 /**
- * Interface that provide CRUD calls to the database
+ * Interface that provide User CRUD calls to the database
  * 
  * @author Le Huy Vu
  *

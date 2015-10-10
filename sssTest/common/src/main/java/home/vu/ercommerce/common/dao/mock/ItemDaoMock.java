@@ -19,6 +19,7 @@ public class ItemDaoMock implements ItemDao {
 
     // Fields
     private List<Item> allItems;
+    private int currentId = 0;
 
     // Constructor
 
@@ -27,7 +28,7 @@ public class ItemDaoMock implements ItemDao {
     }
 
     public void createItem(Item item) {
-        item.setId(allItems.size() + 1);
+        item.setId(++currentId);
         allItems.add(item);
     }
 
@@ -133,6 +134,7 @@ public class ItemDaoMock implements ItemDao {
             Item item = new Item("Item " + i, SSSTestUtils.randFloat(0.5f, 10.0f), SSSTestUtils.randInt(1, 1000), true);
             item.setId(i);
             fakeItems.add(item);
+            currentId = i;
         }
 
         return fakeItems;
