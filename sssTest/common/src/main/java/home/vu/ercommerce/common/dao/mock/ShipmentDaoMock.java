@@ -1,8 +1,8 @@
-package home.vu.common.dao.mock;
+package home.vu.ercommerce.common.dao.mock;
 
-import home.vu.common.dao.ShipmentDao;
-import home.vu.common.enums.ShipmentStatus;
-import home.vu.common.model.Shipment;
+import home.vu.ercommerce.common.dao.ShipmentDao;
+import home.vu.ercommerce.common.enums.ShipmentStatus;
+import home.vu.ercommerce.common.model.Shipment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,7 +59,12 @@ public class ShipmentDaoMock implements ShipmentDao {
 
         List<Shipment> returnedList = new ArrayList<Shipment>();
         for (int i = 0; i < limit; i++) {
-            returnedList.add(shipments.get(offset + i));
+            if (!(offset + i >= shipments.size())) {
+                returnedList.add(shipments.get(offset + i));
+            }
+            else {
+                break;
+            }
         }
         return returnedList;
     }

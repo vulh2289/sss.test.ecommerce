@@ -1,4 +1,4 @@
-package home.vu.common.util;
+package home.vu.ercommerce.common.util;
 
 import java.util.Random;
 

@@ -1,4 +1,4 @@
-package home.vu.common.model;
+package home.vu.ercommerce.common.model;
 
 import org.joda.time.DateTime;
 

@@ -1,7 +1,7 @@
-package home.vu.common.dao.mock;
+package home.vu.ercommerce.common.dao.mock;
 
-import home.vu.common.dao.UserDao;
-import home.vu.common.model.User;
+import home.vu.ercommerce.common.dao.UserDao;
+import home.vu.ercommerce.common.model.User;
 
 import java.util.ArrayList;
 import java.util.List;

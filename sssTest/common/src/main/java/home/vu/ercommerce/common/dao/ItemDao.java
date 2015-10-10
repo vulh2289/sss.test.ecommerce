@@ -1,6 +1,6 @@
-package home.vu.common.dao;
+package home.vu.ercommerce.common.dao;
 
-import home.vu.common.model.Item;
+import home.vu.ercommerce.common.model.Item;
 
 import java.util.List;
 

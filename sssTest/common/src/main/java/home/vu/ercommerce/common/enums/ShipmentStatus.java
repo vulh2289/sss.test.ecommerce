@@ -1,4 +1,4 @@
-package home.vu.common.enums;
+package home.vu.ercommerce.common.enums;
 
 /**
  * Delivery status of a shipment

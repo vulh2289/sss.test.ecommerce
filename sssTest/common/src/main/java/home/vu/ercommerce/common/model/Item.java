@@ -1,4 +1,4 @@
-package home.vu.common.model;
+package home.vu.ercommerce.common.model;
 
 /**
  * Object that holds a simple inventory item

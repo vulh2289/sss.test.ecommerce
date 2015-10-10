@@ -1,6 +1,6 @@
-package home.vu.common.security;
+package home.vu.ercommerce.common.security;
 
-import home.vu.common.dao.UserDao;
+import home.vu.ercommerce.common.dao.UserDao;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -45,7 +45,7 @@ public class UserSecurityService implements UserDetailsService {
      * @see org.springframework.security.core.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
      */
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        home.vu.common.model.User user = null;
+        home.vu.ercommerce.common.model.User user = null;
         try {
             user = userDao.getUser(userName);
         }

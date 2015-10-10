@@ -1,7 +1,7 @@
-package home.vu.common.dao;
+package home.vu.ercommerce.common.dao;
 
-import home.vu.common.enums.ShipmentStatus;
-import home.vu.common.model.Shipment;
+import home.vu.ercommerce.common.enums.ShipmentStatus;
+import home.vu.ercommerce.common.model.Shipment;
 
 import java.util.List;
 

@@ -1,6 +1,7 @@
-package home.vu.common.dao.mock;
+package home.vu.ercommerce.common.dao.mock;
 
-import home.vu.common.dao.SaleRecordDao;
+import home.vu.ercommerce.common.dao.SaleRecordDao;
+import home.vu.ercommerce.common.dao.mock.SaleRecordDaoMock;
 
 import org.junit.Before;
 import org.junit.Test;

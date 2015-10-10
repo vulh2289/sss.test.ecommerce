@@ -1,6 +1,6 @@
-package home.vu.common.model;
+package home.vu.ercommerce.common.model;
 
-import home.vu.common.enums.ShipmentStatus;
+import home.vu.ercommerce.common.enums.ShipmentStatus;
 
 import java.util.List;
 

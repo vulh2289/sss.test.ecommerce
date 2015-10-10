@@ -1,8 +1,8 @@
-package home.vu.common.dao.mock;
+package home.vu.ercommerce.common.dao.mock;
 
-import home.vu.common.dao.ItemDao;
-import home.vu.common.model.Item;
-import home.vu.common.util.SSSTestUtils;
+import home.vu.ercommerce.common.dao.ItemDao;
+import home.vu.ercommerce.common.model.Item;
+import home.vu.ercommerce.common.util.SSSTestUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -105,7 +105,7 @@ public class ItemDaoMock implements ItemDao {
             sortBy = Comparable.name.toString();
         }
 
-        if (limit == -1) {
+        if (limit == -1 || limit > allItems.size()) {
             limit = allItems.size();
         }
 
@@ -114,7 +114,12 @@ public class ItemDaoMock implements ItemDao {
 
         List<Item> returnedList = new ArrayList<Item>();
         for (int i = 0; i < limit; i++) {
-            returnedList.add(allItems.get(offset + i));
+            if (!(offset + i >= allItems.size())) {
+                returnedList.add(allItems.get(offset + i));
+            }
+            else {
+                break;
+            }
         }
         return returnedList;
     }
