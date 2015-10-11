@@ -1,6 +1,6 @@
 package home.vu.ecommerce.api.controller;
 
-import home.vu.ecommerce.api.exception.SSSTestApiUserException;
+import home.vu.ecommerce.api.exception.SSSTestApiException;
 import home.vu.ecommerce.common.model.User;
 
 import org.springframework.stereotype.Controller;
@@ -33,7 +33,7 @@ public class UserController extends AbstractApiController {
     public @ResponseBody User getUser() {
         final User user = getCurrentUser();
         if (user == null) {
-            throw new SSSTestApiUserException(String.format("Error retrieving info on current user"));
+            throw new SSSTestApiException(String.format("Error retrieving info on current user"));
         }
 
         return user;

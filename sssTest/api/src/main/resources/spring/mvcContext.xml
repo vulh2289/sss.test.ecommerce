@@ -11,7 +11,7 @@
 
 	<bean class="home.vu.ecommerce.api.controller.UserController" />
 	
-	<bean class="home.vu.ecommerce.api.controller.InventoryController">
+	<bean class="home.vu.ecommerce.api.controller.ItemController">
 		<property name="inventoryService" ref="inventoryService" />
 	</bean>
 

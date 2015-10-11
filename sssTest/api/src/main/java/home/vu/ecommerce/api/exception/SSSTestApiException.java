@@ -1,10 +1,10 @@
 package home.vu.ecommerce.api.exception;
 
-public class SSSTestApiUserException extends RuntimeException {
+public class SSSTestApiException extends RuntimeException {
 
     private static final long serialVersionUID = -7460411880567475956L;
 
-    public SSSTestApiUserException(String message) {
+    public SSSTestApiException(String message) {
         super(message);
     }
 

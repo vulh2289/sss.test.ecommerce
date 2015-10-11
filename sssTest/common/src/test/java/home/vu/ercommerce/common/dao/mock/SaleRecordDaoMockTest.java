@@ -1,7 +1,7 @@
 package home.vu.ercommerce.common.dao.mock;
 
-import home.vu.ecommerce.common.dao.SaleRecordDao;
-import home.vu.ecommerce.common.dao.mock.SaleRecordDaoMock;
+import home.vu.ecommerce.common.dao.OrderDao;
+import home.vu.ecommerce.common.dao.mock.OrderDaoMock;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,11 +15,11 @@ import org.junit.Test;
 public class SaleRecordDaoMockTest {
 
     // Fields
-    private SaleRecordDao saleRecordDao;
+    private OrderDao saleRecordDao;
 
     @Before
     public void setup() throws Exception {
-        saleRecordDao = new SaleRecordDaoMock();
+        saleRecordDao = new OrderDaoMock();
     }
 
     @Test

@@ -1,18 +1,21 @@
 package home.vu.ecommerce.common.model;
 
+import java.util.List;
+
 import org.joda.time.DateTime;
 
-public class SaleRecord {
+public class Order {
 
+    // Fields
     private int id;
     private User buyer;
-    private Item item;
+    private List<OrderDetail> details;
     private DateTime createdAt;
 
     // Constructor
-    public SaleRecord(User buyer, Item item) {
+    public Order(User buyer, List<OrderDetail> details) {
         this.buyer = buyer;
-        this.item = item;
+        this.details = details;
         createdAt = new DateTime();
     }
 
@@ -25,12 +28,12 @@ public class SaleRecord {
         this.buyer = buyer;
     }
 
-    public Item getItem() {
-        return item;
+    public List<OrderDetail> getDetails() {
+        return details;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void setDetails(List<OrderDetail> details) {
+        this.details = details;
     }
 
     public DateTime getCreatedAt() {

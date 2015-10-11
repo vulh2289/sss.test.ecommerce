@@ -6,6 +6,19 @@ import java.util.List;
 
 public interface InventoryService {
 
-    List<Item> getItems(String sortBy, boolean asc, int offset, int limit);
+    /**
+     * @param sortBy
+     * @param asc
+     * @param offset
+     * @param limit
+     * @return
+     */
+    public List<Item> getItems(String sortBy, boolean asc, int offset, int limit);
+
+    /**
+     * @param id
+     * @return
+     */
+    public Item getItem(int id);
 
 }

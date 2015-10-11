@@ -1,5 +1,6 @@
 package home.vu.ecommerce.api.service.impl;
 
+import home.vu.ecommerce.api.exception.SSSTestApiException;
 import home.vu.ecommerce.api.service.InventoryService;
 import home.vu.ecommerce.common.dao.ItemDao;
 import home.vu.ecommerce.common.model.Item;
@@ -28,6 +29,21 @@ public class InventoryServiceImpl implements InventoryService {
      */
     public List<Item> getItems(String sortBy, boolean asc, int offset, int limit) {
         return itemDao.queryItems(sortBy, asc, offset, limit);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see home.vu.ecommerce.api.service.InventoryService#getItem(int)
+     */
+    public Item getItem(int id) {
+        Item item = itemDao.getItem(id);
+        if (item == null) {
+            throw new SSSTestApiException("No such item");
+        }
+        else {
+            return item;
+        }
     }
 
 }
