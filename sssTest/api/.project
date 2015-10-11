@@ -3,6 +3,8 @@
 	<name>api</name>
 	<comment></comment>
 	<projects>
+		<project>sssTest</project>
+		<project>common</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

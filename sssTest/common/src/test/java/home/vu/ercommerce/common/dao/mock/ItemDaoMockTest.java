@@ -2,10 +2,10 @@ package home.vu.ercommerce.common.dao.mock;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import home.vu.ercommerce.common.dao.ItemDao;
-import home.vu.ercommerce.common.dao.mock.ItemDaoMock;
-import home.vu.ercommerce.common.model.Item;
-import home.vu.ercommerce.common.util.SSSTestUtils;
+import home.vu.ecommerce.common.dao.ItemDao;
+import home.vu.ecommerce.common.dao.mock.ItemDaoMock;
+import home.vu.ecommerce.common.model.Item;
+import home.vu.ecommerce.common.util.SSSTestUtils;
 
 import java.util.List;
 

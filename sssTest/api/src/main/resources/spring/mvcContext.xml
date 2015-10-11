@@ -1,50 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:c="http://www.springframework.org/schema/c"  
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c" xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
 						http://www.springframework.org/schema/mvc   http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
 						http://www.springframework.org/schema/aop   http://www.springframework.org/schema/aop/spring-aop-4.1.xsd">
 
 	<!-- Controllers -->
+
+	<bean class="home.vu.ecommerce.api.controller.UserController" />
 	
-	<bean class="home.vu.ecommerce.api.controller.UserController"/>
+	<bean class="home.vu.ecommerce.api.controller.InventoryController">
+		<property name="inventoryService" ref="inventoryService" />
+	</bean>
 
-	<!-- This is a request scoped bean - ie its actually a proxy that gets injected into other (singleton) beans which 
- 		will resolve on access to one specific to the request -->
- 	<bean id="apiRequest" class="home.vu.ecommerce.api.service.impl.ApiRequestImpl" scope="session">
- 		<aop:scoped-proxy proxy-target-class="false"/>
- 		<constructor-arg name="userDao" ref="userDao"/>
- 	</bean>
- 	
-	<!-- MVC setup -->    
+	<!-- This is a request scoped bean - ie its actually a proxy that gets injected 
+		into other (singleton) beans which will resolve on access to one specific 
+		to the request -->
+	<bean id="apiRequest" class="home.vu.ecommerce.api.service.impl.ApiRequestImpl"
+		scope="session">
+		<aop:scoped-proxy proxy-target-class="false" />
+		<constructor-arg name="userDao" ref="userDao" />
+	</bean>
 
-    <mvc:default-servlet-handler />
-    <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
-        <mvc:message-converters>
-	        <bean class="org.springframework.http.converter.StringHttpMessageConverter" />
-	        <bean class="org.springframework.http.converter.ResourceHttpMessageConverter" />
-	        <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-	            <property name="objectMapper" ref="objectMapper" />
-	        </bean>
-	    </mvc:message-converters>
-    </mvc:annotation-driven>
-    
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="maxUploadSize" value="${max.upload.size:5000000}"/>
-    </bean>
-    
-    <!-- Setup content negotiation. -->
-    <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+	<!-- MVC setup -->
+
+	<mvc:default-servlet-handler />
+	<mvc:annotation-driven
+		content-negotiation-manager="contentNegotiationManager">
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter" />
+			<bean
+				class="org.springframework.http.converter.ResourceHttpMessageConverter" />
+			<bean
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="objectMapper" ref="objectMapper" />
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="${max.upload.size:5000000}" />
+	</bean>
+
+	<!-- Setup content negotiation. -->
+	<bean id="contentNegotiationManager"
+		class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
 		<property name="favorPathExtension" value="false" />
 		<property name="favorParameter" value="true" />
 		<property name="parameterName" value="mediaType" />
-		<property name="ignoreAcceptHeader" value="false"/>
+		<property name="ignoreAcceptHeader" value="false" />
 		<property name="defaultContentType" value="application/json" />
-		
+
 		<property name="mediaTypes">
 			<map>
 				<entry key="json" value="application/json" />
@@ -52,38 +61,23 @@
 			</map>
 		</property>
 	</bean>
-    
-    <!-- Mapping beans -->
-    
-	<bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
-	    <property name="indentOutput" value="false"/>
-	    <property name="simpleDateFormat" value="yyyy-MM-dd'T'HH:mm:ss.SSSZ"/>
-	</bean>
-	
-	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" p:targetObject-ref="objectMapper" p:targetMethod="registerModule">
-	    <property name="arguments">
-	        <list>
-	            <bean class="com.fasterxml.jackson.datatype.joda.JodaModule" />
-	        </list>
-	    </property>
-	</bean>    
-	        
-	<!-- Filtering (to provide cross domain access) -->
 
-	<!-- <bean id="apiFiltering" class="com.adoreboard.api.filter.ApiOriginFilter" c:originUrl="${api.domain.url:*}"/> -->
-	        
-    <!-- Load exception handling -->
-    
-    <!-- <bean class="com.adoreboard.api.aop.advice.ExceptionControllerAdvice"/> -->
-    
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-        <property name="prefix" value="" />
-        <property name="suffix" value=".ftl" />
-        <property name="contentType" value="text/tab-separated-values;charset=UTF-8"/>
-    </bean>
-    
-	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-		<property name="templateLoaderPath"><value>WEB-INF/ftl/</value></property>
+	<!-- Mapping beans -->
+
+	<bean id="objectMapper"
+		class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+		<property name="indentOutput" value="false" />
+		<property name="simpleDateFormat" value="yyyy-MM-dd'T'HH:mm:ss.SSSZ" />
 	</bean>
-	
+
+	<bean
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"
+		p:targetObject-ref="objectMapper" p:targetMethod="registerModule">
+		<property name="arguments">
+			<list>
+				<bean class="com.fasterxml.jackson.datatype.joda.JodaModule" />
+			</list>
+		</property>
+	</bean>
+
 </beans>

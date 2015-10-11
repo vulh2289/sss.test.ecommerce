@@ -1,8 +1,8 @@
 package home.vu.ecommerce.api.controller;
 
 import home.vu.ecommerce.api.service.ApiRequest;
-import home.vu.ercommerce.common.constant.WebConstants;
-import home.vu.ercommerce.common.model.User;
+import home.vu.ecommerce.common.constant.WebConstants;
+import home.vu.ecommerce.common.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

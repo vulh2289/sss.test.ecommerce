@@ -2,13 +2,13 @@ package home.vu.ercommerce.common.dao.mock;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
-import home.vu.ercommerce.common.dao.ShipmentDao;
-import home.vu.ercommerce.common.dao.mock.ShipmentDaoMock;
-import home.vu.ercommerce.common.enums.ShipmentStatus;
-import home.vu.ercommerce.common.model.Item;
-import home.vu.ercommerce.common.model.SaleRecord;
-import home.vu.ercommerce.common.model.Shipment;
-import home.vu.ercommerce.common.model.User;
+import home.vu.ecommerce.common.dao.ShipmentDao;
+import home.vu.ecommerce.common.dao.mock.ShipmentDaoMock;
+import home.vu.ecommerce.common.enums.ShipmentStatus;
+import home.vu.ecommerce.common.model.Item;
+import home.vu.ecommerce.common.model.SaleRecord;
+import home.vu.ecommerce.common.model.Shipment;
+import home.vu.ecommerce.common.model.User;
 
 import java.util.List;
 

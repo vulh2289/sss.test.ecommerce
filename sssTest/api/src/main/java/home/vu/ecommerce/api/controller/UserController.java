@@ -1,7 +1,7 @@
 package home.vu.ecommerce.api.controller;
 
 import home.vu.ecommerce.api.exception.SSSTestApiUserException;
-import home.vu.ercommerce.common.model.User;
+import home.vu.ecommerce.common.model.User;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

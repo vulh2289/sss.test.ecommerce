@@ -1,29 +1,23 @@
 <beans:beans xmlns="http://www.springframework.org/schema/security"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:beans="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:security="http://www.springframework.org/schema/security"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans	   http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
 	                    http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-4.1.xsd
                         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd">
- 
- 	<context:component-scan base-package="com.adoreboard.api.security"/>
- 
+
+	<context:component-scan base-package="home.vu.ecommerce.api.security" />
+	
 	<http create-session="ifRequired" entry-point-ref="basicEntryPoint">
-	
+
 		<!-- Anonymous (all users) -->
-		<intercept-url pattern="/inventory/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-		
-		<!-- User / Admin Role -->
+		<intercept-url pattern="/inventory/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 		<intercept-url pattern="/users/**" access="ROLE_USER,ROLE_ADMIN" />
-		
-		<!-- Admin only -->
-		<intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
-		
-		<custom-filter ref="apiBasicAuthFilter" position="BASIC_AUTH_FILTER"/>
+		<http-basic />
 	</http>
-	
-	<beans:bean id="basicEntryPoint" class="org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint">
+
+	<beans:bean id="basicEntryPoint"
+		class="org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint">
 		<beans:property name="realmName" value="REST Realm" />
 	</beans:bean>
 
@@ -32,14 +26,20 @@
 			<password-encoder ref="passwordEncoder" />
 		</authentication-provider>
 	</authentication-manager>
-	
- 	<!-- Password Encoder -->
- 
- 	<beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
- 		<beans:constructor-arg name="strength" value="${password.strength:4}"/>
- 	</beans:bean>
- 
- 	<beans:bean id="apiBasicAuthFilter" class="org.springframework.security.web.authentication.www.BasicAuthenticationFilter">
- 	</beans:bean>
- 
+
+	<!-- Custom implementation of Spring interface UserDetailService -->
+
+	<beans:bean id="userSecurityService"
+		class="home.vu.ecommerce.common.security.UserSecurityService">
+		<beans:constructor-arg name="userDao" ref="userDao" />
+	</beans:bean>
+
+	<!-- Password Encoder -->
+
+	<beans:bean id="passwordEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+		<beans:constructor-arg name="strength"
+			value="${password.strength:4}" />
+	</beans:bean>
+
 </beans:beans>

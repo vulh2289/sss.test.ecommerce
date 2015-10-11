@@ -4,9 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import home.vu.ercommerce.common.dao.UserDao;
-import home.vu.ercommerce.common.dao.mock.UserDaoMock;
-import home.vu.ercommerce.common.model.User;
+import home.vu.ecommerce.common.dao.UserDao;
+import home.vu.ecommerce.common.dao.mock.UserDaoMock;
+import home.vu.ecommerce.common.model.User;
 
 import java.util.List;
 

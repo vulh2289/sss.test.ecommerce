@@ -1,6 +1,6 @@
 package home.vu.ecommerce.api.service;
 
-import home.vu.ercommerce.common.model.User;
+import home.vu.ecommerce.common.model.User;
 
 /**
  * Represents an individual API request, and holds information common to all requests.
