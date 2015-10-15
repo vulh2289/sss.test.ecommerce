@@ -34,4 +34,8 @@
 		<property name="templateLoaderPath"><value>WEB-INF/ftl/</value></property>
 	</bean>
 	
+	<!-- Load exception handling -->
+    
+    <bean class="home.vu.ecommerce.admin.aop.advice.ExceptionControllerAdvice"/>
+	
 </beans>

@@ -13,8 +13,9 @@ public interface AdminOrderService {
     public OrderResult getOrders(CountsSortingPagination csp);
 
     /**
+     * @param orderId
      * @param orderDetailsId
      * @param status
      */
-    public void changeShipmentStatus(int orderDetailsId, ShipmentStatus status);
+    public void changeShipmentStatus(int orderId, int orderDetailsId, ShipmentStatus status);
 }

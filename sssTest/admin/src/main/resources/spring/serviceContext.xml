@@ -22,6 +22,7 @@
 	
 	<bean id="adminOrderService" class="home.vu.ecommerce.admin.service.impl.AdminOrderServiceImpl">
  		<property name="orderDao" ref="orderDao"/> 
+ 		<property name="itemDao" ref="itemDao"/> 
 	</bean>
 	
 </beans>

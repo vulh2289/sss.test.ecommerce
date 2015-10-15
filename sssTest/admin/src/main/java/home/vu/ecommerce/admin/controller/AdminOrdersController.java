@@ -44,6 +44,7 @@ public class AdminOrdersController extends AbstractAdminController {
     @RequestMapping(method = RequestMethod.GET)
     public String getOrders(Model model,
         @RequestParam(value = "action", required = false, defaultValue = "list") String action,
+        @RequestParam(value = "orderId", required = false) String orderId,
         @RequestParam(value = "orderDetailsId", required = false) String orderDetailsId,
         @RequestParam(value = "dc", required = false, defaultValue = "true") String dc,
         @RequestParam(value = "sortItem", required = false, defaultValue = "id") String sortItem,
@@ -54,7 +55,7 @@ public class AdminOrdersController extends AbstractAdminController {
         CountsSortingPagination csp = getCountsSortingPagination(dc, sortItem, sortAsc, page, rows);
 
         if (action.equalsIgnoreCase(AdminConstants.ACTION_DISPATCH) && orderDetailsId != null) {
-            dispatch(orderDetailsId);
+            dispatch(orderId, orderDetailsId);
         }
 
         // Service call
@@ -64,8 +65,9 @@ public class AdminOrdersController extends AbstractAdminController {
     }
 
     // Private methods
-    private void dispatch(String orderDetailsId) {
-        int id = Integer.parseInt(orderDetailsId);
-        this.adminOrderService.changeShipmentStatus(id, ShipmentStatus.DISPATCHED);
+    private void dispatch(String orderId, String orderDetailsId) {
+        int orderDetailsIdInt = Integer.parseInt(orderDetailsId);
+        int orderIdInt = Integer.parseInt(orderId);
+        this.adminOrderService.changeShipmentStatus(orderIdInt, orderDetailsIdInt, ShipmentStatus.DISPATCHED);
     }
 }

@@ -41,7 +41,7 @@
       <td nowrap>${detail.updatedAt}</td>
       <td>
 	      <#if detail.shipmentStatus == "PENDING" && detail.id??>
-	      	<a href="orders?action=dispatch&orderDetailsId=${detail.id}" onclick="return confirm('Are you sure this is item is dispatched [ ${detail.item.name} ]?')">Dispatch</a>
+	      	<a href="orders?action=dispatch&orderId=${order.id}&orderDetailsId=${detail.id}" onclick="return confirm('Are you sure this is item is dispatched [ ${detail.item.name} ]?')">Dispatch</a>
 	      </#if>
       </td>
     </tr>

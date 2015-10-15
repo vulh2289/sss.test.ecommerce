@@ -9,9 +9,9 @@
 	  "role": 1
 	}, {
 	  "id": 2,
-	  "firstName": "Evelyn",
-	  "lastName": "Coleman",
-	  "userName": "ecoleman1@imdb.com",
+	  "firstName": "Long",
+	  "lastName": "Nguyen",
+	  "userName": "longvcl",
 	  "secret": "$2a$04$/IaSz.IZRI5kgtgkGORUIu.pWUDACI69FHYn2343belVzhenaK.j.",
 	  "active": false,
 	  "role": 0
