@@ -7,7 +7,7 @@ import java.util.Map;
 public interface PaymentService {
 
     /**
-     * Make a payment, and return a url if any
+     * Make a payment, and return a map which has custom variables
      * 
      * @param method
      * @param directPayment
@@ -16,7 +16,11 @@ public interface PaymentService {
      * @param customInput
      * @return
      */
-    public String makePayment(PaymentMethod method, boolean directPayment, float total, String currency, Map<String, String> customInput);
+    public Map<String, String> makePayment(PaymentMethod method,
+        boolean directPayment,
+        float total,
+        String currency,
+        Map<String, String> customInput);
 
     /**
      * Complete indirect payment, details will be specified in customInput

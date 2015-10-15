@@ -55,4 +55,19 @@ public interface OrderDao {
      * @param status
      */
     public void updateShipmentStatus(int orderDetailsId, ShipmentStatus status);
+
+    /**
+     * Get order by external payment id
+     * 
+     * @param paymentId
+     * @return
+     */
+    public Order getOrder(String paymentId);
+
+    /**
+     * Update an order
+     * 
+     * @param order
+     */
+    public void updateOrder(Order order);
 }

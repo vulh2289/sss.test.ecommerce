@@ -7,5 +7,5 @@ package home.vu.ecommerce.common.enums;
  *
  */
 public enum ShipmentStatus {
-    PENDING, DISPATCHED, DELIVERED;
+    UNPAID, PENDING, DISPATCHED, DELIVERED;
 }

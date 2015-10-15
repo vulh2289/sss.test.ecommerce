@@ -26,7 +26,11 @@ public class PaymentServiceImpl implements PaymentService {
      * 
      * @see home.vu.ecommerce.api.service.PaymentService#makePayment(home.vu.ecommerce.common.enums.PaymentMethod, boolean, float, java.lang.String, java.util.Map)
      */
-    public String makePayment(PaymentMethod method, boolean directPayment, float total, String currency, Map<String, String> customInput) {
+    public Map<String, String> makePayment(PaymentMethod method,
+        boolean directPayment,
+        float total,
+        String currency,
+        Map<String, String> customInput) {
 
         PaymentSystem paymentSystem = listOfPaymentSystems.get(method.toString());
         if (paymentSystem == null) {
@@ -34,7 +38,7 @@ public class PaymentServiceImpl implements PaymentService {
         }
 
         if (directPayment) {
-            paymentSystem.directPayment("SSSTest transaction", total, currency, customInput);
+            paymentSystem.directPayment("SSSTest transaction: " + currency + total, total, currency, customInput);
         }
         else {
             return paymentSystem.indirectPayment("SSSTest transaction", total, currency, customInput);

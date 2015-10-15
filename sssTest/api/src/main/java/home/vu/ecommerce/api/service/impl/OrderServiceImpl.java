@@ -5,9 +5,11 @@ import home.vu.ecommerce.api.model.BasketItem;
 import home.vu.ecommerce.api.model.OrderInput;
 import home.vu.ecommerce.api.service.OrderService;
 import home.vu.ecommerce.api.service.PaymentService;
+import home.vu.ecommerce.common.constant.SSSTestConstants;
 import home.vu.ecommerce.common.dao.ItemDao;
 import home.vu.ecommerce.common.dao.OrderDao;
 import home.vu.ecommerce.common.enums.PaymentMethod;
+import home.vu.ecommerce.common.enums.ShipmentStatus;
 import home.vu.ecommerce.common.model.Item;
 import home.vu.ecommerce.common.model.Order;
 import home.vu.ecommerce.common.model.OrderDetail;
@@ -66,13 +68,23 @@ public class OrderServiceImpl implements OrderService {
             total += availableItem.getPrice() * each.getQuantity();
         }
 
-        String returnUrl = paymentService.makePayment(orderInput.getPaymentMethod(), orderInput.isDirectPayment(), total, "USD",
+        Map<String, String> result = paymentService.makePayment(orderInput.getPaymentMethod(), orderInput.isDirectPayment(), total, "USD",
             orderInput.getPaymentDetails());
 
         Order newOrder = new Order(buyer, details);
+        if (orderInput.isDirectPayment()) {
+            newOrder.setPaid(true);
+        }
+        else {
+            newOrder.setPaid(false);
+            newOrder.setExternalId(result.get(SSSTestConstants.PAYMENT_ID));
+            for (OrderDetail detail : newOrder.getDetails()) {
+                detail.setShipmentStatus(ShipmentStatus.UNPAID);
+            }
+        }
         orderDao.createOrder(newOrder);
 
-        return returnUrl;
+        return result.get(SSSTestConstants.APPROVAL_URL);
     }
 
     /*
@@ -81,7 +93,15 @@ public class OrderServiceImpl implements OrderService {
      * @see home.vu.ecommerce.api.service.OrderService#completeIndirectOrder(java.lang.String, java.util.Map)
      */
     public boolean completeIndirectOrder(PaymentMethod paymentMethod, Map<String, String> customInput) {
-        return paymentService.completeIndirectPayment(paymentMethod, customInput);
+        boolean paid = paymentService.completeIndirectPayment(paymentMethod, customInput);
+        Order order = orderDao.getOrder(customInput.get(SSSTestConstants.PAYMENT_ID));
+        order.setPaid(paid);
+        for (OrderDetail detail : order.getDetails()) {
+            detail.setShipmentStatus(ShipmentStatus.PENDING);
+        }
+        orderDao.updateOrder(order);
+
+        return paid;
     }
 
     /*

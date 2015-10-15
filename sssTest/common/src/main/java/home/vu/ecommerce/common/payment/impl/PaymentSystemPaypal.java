@@ -1,10 +1,12 @@
 package home.vu.ecommerce.common.payment.impl;
 
+import home.vu.ecommerce.common.constant.SSSTestConstants;
 import home.vu.ecommerce.common.exception.SSSTestPaymentException;
 import home.vu.ecommerce.common.model.PaypalExecutionInput;
 import home.vu.ecommerce.common.payment.PaymentSystem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -70,7 +72,7 @@ public class PaymentSystemPaypal implements PaymentSystem {
      * 
      * @see home.vu.ecommerce.common.payment.PaymentSystem#indirectPayment(java.lang.String, float, java.lang.String, java.util.Map)
      */
-    public String indirectPayment(String description, float total, String currency, Map<String, String> customInput) {
+    public Map<String, String> indirectPayment(String description, float total, String currency, Map<String, String> customInput) {
 
         try {
             String accessToken = new OAuthTokenCredential(appId, secret, sdkConfiguration).getAccessToken();
@@ -79,7 +81,7 @@ public class PaymentSystemPaypal implements PaymentSystem {
 
             Amount amount = new Amount();
             amount.setCurrency(currency);
-            amount.setTotal(String.format("%.2f", total)); // TODO: what is happening here?
+            amount.setTotal(String.format("%.2f", total));
             // amount.setTotal("12");
             Transaction transaction = new Transaction();
             transaction.setDescription(description);
@@ -104,19 +106,24 @@ public class PaymentSystemPaypal implements PaymentSystem {
 
             Payment createdPayment = payment.create(apiContext);
 
+            // Returning Map
+            Map<String, String> returnMap = new HashMap<String, String>();
+            returnMap.put(SSSTestConstants.PAYMENT_ID, createdPayment.getId());
+
             List<Links> links = createdPayment.getLinks();
             for (Links link : links) {
-                if (link.getRel().equals("approval_url")) {
-                    return link.getHref();
+                if (link.getRel().equals(SSSTestConstants.APPROVAL_URL)) {
+                    returnMap.put(SSSTestConstants.APPROVAL_URL, link.getHref());
                 }
             }
+
+            return returnMap;
         }
         catch (PayPalRESTException e) {
             e.printStackTrace();
             throw new SSSTestPaymentException("Error while handling payment using Paypal");
         }
 
-        return null;
     }
 
     /*

@@ -84,10 +84,10 @@
 			var total = 0.0;
 			$(".basket").empty();
 			for (var i in basket) {
-				total += parseFloat(basket[i].price * basket[i].quantity).toFixed(2);
+				total += (basket[i].price * basket[i].quantity);
 				$(".basket").append('<li><span>' + basket[i].itemName +'</span> <span>' + basket[i].quantity +'</span></li>');
 			}
-			$(".basket").append('<h4> Total: $ ' + total +'</h4>');
+			$(".basket").append('<h4> Total: $ ' + total.toFixed(2) +'</h4>');
 			$('.checkout').removeClass('hidden');
 		}
 	});

@@ -11,10 +11,12 @@ public class Order implements Serializable {
 
     // Fields
     private int id;
+    private String externalId;
     private User buyer;
     private List<OrderDetail> details;
     private DateTime createdAt;
     private float total;
+    private boolean paid;
 
     // Constructor
     public Order(User buyer, List<OrderDetail> details) {
@@ -65,6 +67,22 @@ public class Order implements Serializable {
 
     public void setTotal(float total) {
         this.total = total;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
+    }
+
+    public boolean isPaid() {
+        return paid;
+    }
+
+    public void setPaid(boolean paid) {
+        this.paid = paid;
     }
 
 }

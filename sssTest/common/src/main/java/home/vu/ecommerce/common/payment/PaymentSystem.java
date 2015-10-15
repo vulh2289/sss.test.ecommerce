@@ -16,7 +16,7 @@ public interface PaymentSystem {
     public boolean directPayment(String description, float total, String currency, Map<String, String> customInput);
 
     /**
-     * Not handling payment in our system, rather we ask third party to handle and return redirect_url.
+     * Not handling payment in our system, rather we ask third party to handle and return redirect_url, and paymentId inside the returning map.
      * 
      * 
      * @param description
@@ -26,7 +26,7 @@ public interface PaymentSystem {
      *            : will contain payment details
      * @return
      */
-    public String indirectPayment(String description, float total, String currency, Map<String, String> customInput);
+    public Map<String, String> indirectPayment(String description, float total, String currency, Map<String, String> customInput);
 
     /**
      * Execute pending payment

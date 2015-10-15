@@ -24,7 +24,7 @@
       <th nowrap>Item</th>
       <th nowrap>Quantity</th>
       <th nowrap>Shipment Status</th>
-      <th nowrap>Shipment apdated at</th>
+      <th nowrap>Shipment updated at</th>
       <th></th>
     </tr>
   </thead>

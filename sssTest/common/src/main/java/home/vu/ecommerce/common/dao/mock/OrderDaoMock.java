@@ -94,4 +94,14 @@ public class OrderDaoMock implements OrderDao {
 
     }
 
+    public Order getOrder(String paymentId) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public void updateOrder(Order order) {
+        // TODO Auto-generated method stub
+
+    }
+
 }

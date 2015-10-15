@@ -26,9 +26,11 @@ public class OrderDaoJsonMock extends AbstractJsonMockDao implements OrderDao {
         Order last = getLast(Order.class);
 
         currentId = last != null ? last.getId() : 0;
-        for (OrderDetail details : last.getDetails()) {
-            if (details.getId() > orderDetailsId) {
-                orderDetailsId = details.getId();
+        if (last != null) {
+            for (OrderDetail details : last.getDetails()) {
+                if (details.getId() > orderDetailsId) {
+                    orderDetailsId = details.getId();
+                }
             }
         }
     }
@@ -74,7 +76,9 @@ public class OrderDaoJsonMock extends AbstractJsonMockDao implements OrderDao {
         List<Order> allOrders = readDB(Order.class);
         List<Order> returningOrders = new ArrayList<Order>();
         for (Order record : allOrders) {
-            if (user == null || record.getBuyer().getId() == user.getId() || record.getBuyer().getUserName().equals(user.getUserName())) {
+            if (user == null ||
+                (record.isPaid() && (record.getBuyer().getId() == user.getId() || record.getBuyer().getUserName()
+                                .equals(user.getUserName())))) {
                 returningOrders.add(record);
             }
         }
@@ -129,5 +133,38 @@ public class OrderDaoJsonMock extends AbstractJsonMockDao implements OrderDao {
         else {
             throw new RuntimeException("No such order!");
         }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see home.vu.ecommerce.common.dao.OrderDao#getOrder(java.lang.String)
+     */
+    public Order getOrder(String paymentId) {
+        List<Order> allOrders = readDB(Order.class);
+        for (Order record : allOrders) {
+            if (record.getExternalId().equals(paymentId)) {
+                return record;
+            }
+        }
+        return null;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see home.vu.ecommerce.common.dao.OrderDao#updateOrder(home.vu.ecommerce.common.model.Order)
+     */
+    public void updateOrder(Order order) {
+        List<Order> allOrders = readDB(Order.class);
+        for (int i = 0; i < allOrders.size(); i++) {
+            Order record = allOrders.get(i);
+            if (record.getId() == order.getId()) {
+                allOrders.set(i, order);
+                break;
+            }
+
+        }
+        writeDB(allOrders);
     }
 }
