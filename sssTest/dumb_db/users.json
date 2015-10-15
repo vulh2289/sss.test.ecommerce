@@ -19,7 +19,7 @@
 	  "id": 3,
 	  "firstName": "Phyllis",
 	  "lastName": "Nguyen",
-	  "userName": "pnguyen2@g.co",
+	  "userName": "hatangdong",
 	  "secret": "$2a$04$/IaSz.IZRI5kgtgkGORUIu.pWUDACI69FHYn2343belVzhenaK.j.",
 	  "active": true,
 	  "role": 1
@@ -27,7 +27,7 @@
 	  "id": 4,
 	  "firstName": "Jacqueline",
 	  "lastName": "King",
-	  "userName": "jking3@reverbnation.com",
+	  "userName": "nttd",
 	  "secret": "$2a$04$/IaSz.IZRI5kgtgkGORUIu.pWUDACI69FHYn2343belVzhenaK.j.",
 	  "active": false,
 	  "role": 0

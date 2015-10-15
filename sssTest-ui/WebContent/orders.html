@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Your orders</title>
+<link rel="stylesheet" type="text/css" href="sssTest.css">
+</head>
+<body>
+	<script src="https://code.jquery.com/jquery-2.1.3.min.js" type="text/javascript"></script>
+  	<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js" type="text/javascript"></script>
+  	<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.9/backbone-min.js" type="text/javascript"></script>
+    <script src="http://cloud.github.com/downloads/wycats/handlebars.js/handlebars-1.0.0.beta.6.js" type="text/javascript" charset="utf-8"></script>
+    
+    <script id="li-order-template" type="text/x-handlebars-template">
+    		<li><a>{{item.name}}</a>
+				<div style='font-size: 11px'>Price: $ {{item.price}}</div>
+				<div style='font-size: 11px'>Quantity: {{item.quantity}} </div>
+				<div style='font-size: 11px'>Shipment: {{shipmentStatus}} </div>
+				<div style='font-size: 11px'>Updated at: <strong>{{updatedAt}}</strong> </div>
+			</li>
+	</script>
+    
+    <script>
+    	var host = window.location.host;
+    	var Order = Backbone.Model.extend();
+    
+	    var OrderCollection = Backbone.Collection.extend({
+			model: Order,
+			
+			//Specify REST URL
+			url: 'http://' + host + '/api/orders'
+		});
+	    
+	    var OrderView = Backbone.View.extend({
+			tagName: 'li',
+			initialize: function(){
+				this.render();
+			},
+			
+			render: function(){
+				var source = $('#li-order-template').html();
+				var template = Handlebars.compile(source);
+				var html = template(this.model.toJSON());
+				
+				this.$el.html(html);
+				return this;
+			}
+		});
+	    
+	    var OrderCollectionView = Backbone.View.extend({
+			tagName: 'ul',
+			
+			initialize: function() {
+				var collection = this.collection;
+				this.listenTo(collection, 'sync', this.render);
+			},
+
+			render: function(){
+				this.collection.each(function(order){
+					var orderView = new OrderView({ model: order });
+					this.$el.append(orderView.render().el); // adding all the item objects.
+				}, this);
+				
+				return this;
+			}
+		});
+	    
+		var orderCollectionInstance = new OrderCollection();
+		orderCollectionInstance.fetch();
+		var orderCollectionView = new OrderCollectionView({ collection: orderCollectionInstance });
+		$(document.body).append(orderCollectionView.render().el); 
+	    
+    </script>
+</body>
+</html>
