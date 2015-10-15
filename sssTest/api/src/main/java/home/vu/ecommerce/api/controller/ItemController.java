@@ -58,7 +58,7 @@ public class ItemController extends AbstractApiController {
      * @param limit
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public @ResponseBody Item getItemDetails(@PathVariable int id) {
 
         return inventoryService.getItem(id);

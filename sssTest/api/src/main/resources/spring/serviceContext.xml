@@ -2,10 +2,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:c="http://www.springframework.org/schema/c"
 	xmlns:int="http://www.springframework.org/schema/integration"
-    xmlns:int-amqp="http://www.springframework.org/schema/integration/amqp"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans            http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
                         http://www.springframework.org/schema/integration      http://www.springframework.org/schema/integration/spring-integration-4.1.xsd
-                        http://www.springframework.org/schema/integration/amqp http://www.springframework.org/schema/integration/amqp/spring-integration-amqp.xsd">
+                        http://www.springframework.org/schema/util             http://www.springframework.org/schema/util/spring-util-2.5.xsd">
                     
     <bean id="userService" class="home.vu.ecommerce.api.service.impl.UserServiceImpl"/>
     
@@ -13,4 +13,40 @@
         <property name="itemDao" ref="itemDao"/>
     </bean>
     
+    <bean id="orderService" class="home.vu.ecommerce.api.service.impl.OrderServiceImpl">
+        <property name="orderDao" ref="orderDao"/>
+        <property name="itemDao" ref="itemDao"/>
+        <property name="paymentService" ref="paymentService"/>
+    </bean>
+    
+    
+	<!-- Paypal sandbox -->
+	<util:map id="paypalConfiguration">
+	    <entry key="service.EndPoint" value="${paypal.service.endpoint}"/>
+	    <entry key="mode" value="${paypal.mode}"/>
+	    <entry key="http.ConnectionTimeOut" value="${paypal.http.ConnectionTimeOut}"/>
+	    <entry key="http.Retry" value="${paypal.http.Retry}"/>
+	    <entry key="http.ReadTimeOut" value="${paypal.http.ReadTimeOut}"/>
+	    <entry key="http.MaxConnection" value="${paypal.http.MaxConnection}"/>
+	    <entry key="http.ProxyPort" value="${paypal.http.ProxyPort}"/>
+	    <entry key="http.ProxyHost" value="${paypal.http.ProxyHost}"/>
+	    <entry key="http.UseProxy" value="${paypal.http.UseProxy}"/>
+	</util:map>
+	
+	<bean id="paymentSystemPaypalSandbox" class="home.vu.ecommerce.common.payment.impl.PaymentSystemPaypal">
+	    <constructor-arg name="appId" value="${paypal.app.id}"/>
+	    <constructor-arg name="secret" value="${paypal.app.secret}"/>
+	    <constructor-arg name="configuration" ref="paypalConfiguration" />
+	    <property name="returnUrl" value="${paypal.returnUrl}"/>
+	    <property name="cancelUrl" value="${paypal.cancelUrl}"/>
+	</bean>
+	
+	<!-- Payment Service -->
+	<util:map id="listOfPaymentSystems">
+	    <entry key="PAYPAL"><ref bean="paymentSystemPaypalSandbox"/></entry>
+	</util:map>
+	<bean id="paymentService" class="home.vu.ecommerce.api.service.impl.PaymentServiceImpl">
+	    <property name="listOfPaymentSystems" ref="listOfPaymentSystems"/>
+	</bean>
+	
 </beans>

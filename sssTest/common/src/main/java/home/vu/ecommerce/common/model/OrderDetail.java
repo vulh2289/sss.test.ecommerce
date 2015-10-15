@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 public class OrderDetail {
 
     // Fields
+    private int id;
     private Item item;
     private ShipmentStatus shipmentStatus;
     private DateTime updatedAt;
@@ -22,6 +23,9 @@ public class OrderDetail {
         this(boughtItem, ShipmentStatus.PENDING, new DateTime());
     }
 
+    public OrderDetail() {
+    }
+
     // Getters & Setters
     public Item getItem() {
         return item;
@@ -29,6 +33,14 @@ public class OrderDetail {
 
     public void setItem(Item item) {
         this.item = item;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public ShipmentStatus getShipmentStatus() {

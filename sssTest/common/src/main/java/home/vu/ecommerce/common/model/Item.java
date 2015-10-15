@@ -1,12 +1,16 @@
 package home.vu.ecommerce.common.model;
 
+import java.io.Serializable;
+
 /**
  * Object that holds a simple inventory item
  * 
  * @author Le Huy Vu
  *
  */
-public class Item {
+public class Item implements Serializable {
+
+    private static final long serialVersionUID = 3348220543717570251L;
 
     // Fields
     private int id;
@@ -21,6 +25,9 @@ public class Item {
         this.quantity = quantity;
         this.price = price;
         this.active = active;
+    }
+
+    public Item() {
     }
 
     // Getters & Setters

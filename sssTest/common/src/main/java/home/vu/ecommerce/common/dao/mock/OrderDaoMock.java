@@ -1,7 +1,9 @@
 package home.vu.ecommerce.common.dao.mock;
 
 import home.vu.ecommerce.common.dao.OrderDao;
+import home.vu.ecommerce.common.enums.ShipmentStatus;
 import home.vu.ecommerce.common.model.Order;
+import home.vu.ecommerce.common.model.OrderDetail;
 import home.vu.ecommerce.common.model.User;
 
 import java.util.ArrayList;
@@ -63,6 +65,33 @@ public class OrderDaoMock implements OrderDao {
         }
 
         return returnedSaleRecords;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see home.vu.ecommerce.common.dao.OrderDao#getOrderDetails(home.vu.ecommerce.common.model.User)
+     */
+    public List<OrderDetail> getOrderDetails(User user) {
+        List<OrderDetail> returningDetails = new ArrayList<OrderDetail>();
+        for (Order record : allOrders) {
+            if (user == null || (record.getBuyer().getId() == user.getId() || record.getBuyer().getUserName().equals(user.getUserName()))) {
+                for (OrderDetail each : record.getDetails()) {
+                    returningDetails.add(each);
+                }
+            }
+        }
+
+        return returningDetails;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see home.vu.ecommerce.common.dao.OrderDao#updateShipmentStatus(int, home.vu.ecommerce.common.enums.ShipmentStatus)
+     */
+    public void updateShipmentStatus(int orderDetailsId, ShipmentStatus status) {
+
     }
 
 }

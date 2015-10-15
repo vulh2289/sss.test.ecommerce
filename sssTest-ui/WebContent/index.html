@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>SSS Test e-Commerce</title>
+
+<style>
+	.hidden {display:none};
+	
+	div {
+	  width: 200px;
+	}
+	 
+	h2 {
+	  font: 400 40px/1.5 Helvetica, Verdana, sans-serif;
+	  margin: 0;
+	  padding: 0;
+	}
+	 
+	ul {
+	  list-style-type: circle;
+	}
+	 
+	li {
+	  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+	  border-bottom: 1px solid #ccc;
+	}
+	 
+	li:last-child {
+	  border: none;
+	}
+	 
+	li a {
+	  text-decoration: none;
+	  color: #000;
+	  display: block;
+	 
+	  -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+	  -moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+	  -o-transition: font-size 0.3s ease, background-color 0.3s ease;
+	  -ms-transition: font-size 0.3s ease, background-color 0.3s ease;
+	  transition: font-size 0.3s ease, background-color 0.3s ease;
+	}
+	 
+	li a:hover {
+	  font-size: 25px;
+	  background: #f6f6f6;
+	  color: #2E9AFE;
+	}
+	
+	button {
+		cursor: pointer;
+	}
+</style>
+
+</head>
+<body>
+	<h3>BASKET</h3>
+	<ul class='basket'></ul>
+	<button class='checkout hidden'>Checkout</button>
+	<button class='placeOrder hidden'><img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/pp-acceptance-small.png" alt="Buy now with PayPal" /></button>
+
+	<h2>INVENTORY</h2>
+	<ul class='items'></ul>
+	
+	<!-- import Backbone.js-->
+	<script src="https://code.jquery.com/jquery-2.1.3.min.js" type="text/javascript"></script>
+  	<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js" type="text/javascript"></script>
+  	<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.9/backbone-min.js" type="text/javascript"></script>
+    <script src="http://cloud.github.com/downloads/wycats/handlebars.js/handlebars-1.0.0.beta.6.js" type="text/javascript" charset="utf-8"></script>
+    
+    <script id="li-item-template" type="text/x-handlebars-template">
+    		<li><a>{{name}}</a>
+				<div>Price: <strong>$ {{price}} </strong></div>
+				<button class="addToBasket" itemId="{{id}}">Add To Basket</button>
+			</li>
+	</script>
+
+	<script>
+	var host = window.location.host;
+	
+	// Models
+	var Item = Backbone.Model.extend();
+	
+	var ItemCollection = Backbone.Collection.extend({
+		model: Item,
+		
+		//Specify REST URL
+		url: 'http://' + host + '/api/items?sortBy=price&asc=true&offset=0&limit=20'
+	});
+	
+	var basket = [];
+	
+	// View
+	var ItemView = Backbone.View.extend({
+		tagName: 'li',
+		events: {
+			"click .addToBasket" : "addToBasket"
+		},
+		initialize: function(){
+			this.render();
+		},
+		
+		render: function(){
+			var source = $('#li-item-template').html();
+			var template = Handlebars.compile(source);
+			var html = template(this.model.toJSON());
+			
+			this.$el.html(html);
+			return this;
+		},
+		
+		addToBasket: function() {
+			var found = false;
+			
+			for (var i in basket) {
+			     if (basket[i].itemId ==  this.model.id) {
+			    	 basket[i].quantity ++;
+			    	 found = true;
+			         break; //Stop this loop, we found it!
+			     }
+			}
+			
+			if (!found) {
+				// If we haven't found it, then add new
+				var model = this.model;
+				var itemBasket = {itemId: model.id, itemName: model.get('name'), price:model.get('price'), quantity: 1};
+				basket.push(itemBasket);
+			}
+			
+			// Create basket view
+			var total = 0.0;
+			$(".basket").empty();
+			for (var i in basket) {
+				total += basket[i].price * basket[i].quantity;
+				$(".basket").append('<li><span>' + basket[i].itemName +'</span> <span>' + basket[i].quantity +'</span></li>');
+			}
+			$(".basket").append('<h4> Total: $' + total +'</h4>');
+			$('.checkout').removeClass('hidden');
+		}
+	});
+	
+	// View for all people
+	var ItemCollectionView = Backbone.View.extend({
+		tagName: 'ul',
+		
+		initialize: function() {
+			$('.checkout').click(this.checkout);
+			$('.placeOrder').click(this.placeOrder);
+			var collection = this.collection;
+			this.listenTo(collection, 'sync', this.render);
+		},
+
+		render: function(){
+			this.collection.each(function(item){
+				var itemView = new ItemView({ model: item });
+				this.$el.append(itemView.render().el); // adding all the item objects.
+			}, this);
+			
+			return this;
+		},
+		
+		checkout: function() {
+		    $.ajax({
+                type: "PUT",
+                contentType: "application/json; charset=utf-8",
+                headers: {
+                    'X-HTTP-Method-Override': 'PUT'
+                },
+                url: 'http://' + host + '/api/orders/checkout',
+                data: JSON.stringify(basket),
+                complete: function (data) {},
+                success: function (data) { $('.placeOrder').removeClass('hidden'); },
+                error:  function (data) { 
+                	var errorItems = '';
+                	var separate = '';
+                	for (var i = 0; i < data.responseJSON.lenght; i++) {
+                		errorItems += separate + data[i].itemName;
+                		separate = ', ';
+                	}
+                	alert("failed, insufficient items: " + errorItems);
+               	},
+                dataType: "json"
+            });
+		},
+		
+		placeOrder: function() {
+			var paymentInput= {paymentMethod: 'PAYPAL', directPayment : false, basketItems: basket};
+		    $.ajax({
+                type: "PUT",
+                contentType: "application/json; charset=utf-8",
+                headers: {
+                    'X-HTTP-Method-Override': 'PUT'
+                },
+                url: 'http://' + host + '/api/orders/placeOrder',
+                data: JSON.stringify(paymentInput),
+                complete: function (data) { 
+                	window.location.replace(data.responseText);
+               	},
+                error:  function (data) {
+               	},
+                dataType: "json"
+            });
+		}
+	});
+	
+	var itemCollectionInstance = new ItemCollection();
+	itemCollectionInstance.fetch();
+	var itemCollectionView = new ItemCollectionView({ collection: itemCollectionInstance });
+	$(document.body).append(itemCollectionView.render().el); 
+	
+	</script>
+</body>
+</html>

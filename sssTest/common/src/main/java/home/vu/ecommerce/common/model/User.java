@@ -1,5 +1,7 @@
 package home.vu.ecommerce.common.model;
 
+import java.io.Serializable;
+
 import org.joda.time.DateTime;
 
 /**
@@ -8,8 +10,11 @@ import org.joda.time.DateTime;
  * @author DX-SK
  *
  */
-public class User {
-	private int id;
+public class User implements Serializable {
+
+    private static final long serialVersionUID = 6237643421604701374L;
+
+    private int id;
     private String userName;
     private DateTime createdOn;
     private DateTime updatedOn;
@@ -19,91 +24,90 @@ public class User {
     private String lastName;
     private String email;
     private boolean active;
-    
+
     // Empty Constructor
     public User() {
-	}
+    }
 
     // Getters & Setters
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public String getUserName() {
-		return userName;
-	}
+    public String getUserName() {
+        return userName;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-	public DateTime getCreatedOn() {
-		return createdOn;
-	}
+    public DateTime getCreatedOn() {
+        return createdOn;
+    }
 
-	public void setCreatedOn(DateTime createdOn) {
-		this.createdOn = createdOn;
-	}
+    public void setCreatedOn(DateTime createdOn) {
+        this.createdOn = createdOn;
+    }
 
-	public DateTime getUpdatedOn() {
-		return updatedOn;
-	}
+    public DateTime getUpdatedOn() {
+        return updatedOn;
+    }
 
-	public void setUpdatedOn(DateTime updatedOn) {
-		this.updatedOn = updatedOn;
-	}
+    public void setUpdatedOn(DateTime updatedOn) {
+        this.updatedOn = updatedOn;
+    }
 
-	public String getSecret() {
-		return secret;
-	}
+    public String getSecret() {
+        return secret;
+    }
 
-	public void setSecret(String secret) {
-		this.secret = secret;
-	}
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
 
-	public int getRole() {
-		return role;
-	}
+    public int getRole() {
+        return role;
+    }
 
-	public void setRole(int role) {
-		this.role = role;
-	}
+    public void setRole(int role) {
+        this.role = role;
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public boolean isActive() {
-		return active;
-	}
+    public boolean isActive() {
+        return active;
+    }
 
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-    
-    
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
 }

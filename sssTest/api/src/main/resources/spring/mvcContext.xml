@@ -14,6 +14,10 @@
 	<bean class="home.vu.ecommerce.api.controller.ItemController">
 		<property name="inventoryService" ref="inventoryService" />
 	</bean>
+	
+	<bean class="home.vu.ecommerce.api.controller.OrderController">
+		<property name="orderService" ref="orderService" />
+	</bean>
 
 	<!-- This is a request scoped bean - ie its actually a proxy that gets injected 
 		into other (singleton) beans which will resolve on access to one specific 
@@ -79,5 +83,10 @@
 			</list>
 		</property>
 	</bean>
+	
+		        
+    <!-- Load exception handling -->
+    
+    <bean class="home.vu.ecommerce.api.aop.advice.ExceptionControllerAdvice"/>
 
 </beans>

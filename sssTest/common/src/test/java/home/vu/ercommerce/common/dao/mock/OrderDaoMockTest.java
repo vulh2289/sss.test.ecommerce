@@ -12,7 +12,7 @@ import org.junit.Test;
  * @author Le Huy Vu
  *
  */
-public class SaleRecordDaoMockTest {
+public class OrderDaoMockTest {
 
     // Fields
     private OrderDao saleRecordDao;

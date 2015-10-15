@@ -1,0 +1,11 @@
+[
+	{
+		  "id": 1,
+		  "firstName": "Frances",
+		  "lastName": "Jones",
+		  "userName": "fjones0@yale.edu",
+		  "secret": "$2a$04$/IaSz.IZRI5kgtgkGORUIu.pWUDACI69FHYn2343belVzhenaK.j.",
+		  "active": false,
+		  "role": 1
+	}
+]

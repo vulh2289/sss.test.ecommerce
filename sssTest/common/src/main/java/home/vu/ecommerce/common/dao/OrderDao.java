@@ -1,6 +1,8 @@
 package home.vu.ecommerce.common.dao;
 
+import home.vu.ecommerce.common.enums.ShipmentStatus;
 import home.vu.ecommerce.common.model.Order;
+import home.vu.ecommerce.common.model.OrderDetail;
 import home.vu.ecommerce.common.model.User;
 
 import java.util.List;
@@ -37,4 +39,20 @@ public interface OrderDao {
      * @return
      */
     public List<Order> getOrders(User user);
+
+    /**
+     * Get orders in more details
+     * 
+     * @param user
+     * @return
+     */
+    public List<OrderDetail> getOrderDetails(User user);
+
+    /**
+     * Update shipment status of an order details
+     * 
+     * @param orderDetailsId
+     * @param status
+     */
+    public void updateShipmentStatus(int orderDetailsId, ShipmentStatus status);
 }
